@@ -9,6 +9,7 @@ import Profile from "./components/profile/Profile";
 import actions from "./api/index";
 import GoogleAuth from "./components/auth/GoogleAuth";
 import GoogleAuthLogin from "./components/auth/GoogleAuthLogin";
+import Admin from "./components/Admin";
 import {
   NotificationContainer,
   NotificationManager,
@@ -54,6 +55,9 @@ const App = () => {
       </nav>
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} />} />
+
+        <Route exact path="/admin" render={(props) => <Admin {...props} />} />
+
         <Route
           exact
           path="/sign-up"
