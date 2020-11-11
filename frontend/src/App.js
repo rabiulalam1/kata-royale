@@ -72,8 +72,8 @@ const App = () => {
 
         <Route component={NotFound} />
       </Switch>
-      {<GoogleAuth setUser={setUser} />}
-      {<GoogleAuthLogin setUser={setUser} />}
+      {!user && <GoogleAuth setUser={setUser} />}
+      {!user && <GoogleAuthLogin setUser={setUser} />}
 
       <NotificationContainer />
     </TheContext.Provider>
