@@ -55,18 +55,17 @@ router.post("/newKata", verifyToken, (req, res, next) => {
       console.log(err, "<<<<<<<<<<<<<<<<<<<<<<<<<<Error");
       res.status(403).json(err);
     } else {
-      console.log(req.body);
+      // console.log(req.body);
       Kata.findOne(req.body).then((kata) => {
         if (kata) {
           return res.status(500).json({ message: "This Kata already exists" });
         }
-        console.log(req.body.url.split("/"));
+        // console.log(req.body.url.split("/"));
         let id = req.body.url.split("/")[4];
-        console.log(id);
         axios
           .get(`https://www.codewars.com/api/v1/code-challenges/${id}`)
           .then((challenge) => {
-            console.log("challendge, ", challenge);
+            // console.log("challendge, ", challenge);
             challenge.userId = authData.user._id;
             Kata.create(challenge.data)
               .then((kata) => res.status(200).json({ kata }))

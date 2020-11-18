@@ -16,8 +16,12 @@ router.post("/kata/:name", (req, res, next) => {
         console.log(response);
         let lastKata = response.data.data[0].id;
         Kata.findOne({ id: lastKata }).then((kata) => {
-          console.log(kata);
-          Challenge.create({ name: req.params.name, kataId: kata._id });
+          console.log(kata, "<<<<<<<<<<<<<<<<<Kata");
+          Challenge.create({ name: req.params.name, kataId: kata._id }).then(
+            (challenge) => {
+              console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
+            }
+          );
         });
       })
       .catch((err) => console.error(err));
