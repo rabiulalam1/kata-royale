@@ -7,6 +7,7 @@ const userSchema = new Schema(
     name: String,
     googleId: String,
     imageUrl: String,
+    codewarsId: String,
   },
   {
     timestamps: true,
