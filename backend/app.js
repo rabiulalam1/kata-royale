@@ -10,8 +10,11 @@ const cors = require("cors");
 const session = require("express-session");
 const passport = require("./config/passport");
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost/deploymentExample";
+// const MONGODB_URI =
+//   process.env.MONGODB_URI || "mongodb://localhost/deploymentExample";
+// console.log("Connecting DB to ", MONGODB_URI);
+
+const MONGODB_URI = "mongodb://localhost/Kata-Royale";
 console.log("Connecting DB to ", MONGODB_URI);
 
 mongoose

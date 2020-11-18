@@ -68,7 +68,7 @@ router.post("/newKata", verifyToken, (req, res, next) => {
           .then((challenge) => {
             console.log("challendge, ", challenge);
             challenge.userId = authData.user._id;
-            Kata.create(challenge)
+            Kata.create(challenge.data)
               .then((kata) => res.status(200).json({ kata }))
               .catch(console.error);
           })
