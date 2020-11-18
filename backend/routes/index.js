@@ -15,14 +15,19 @@ router.post("/kata/:name", (req, res, next) => {
       .then((response) => {
         console.log(response);
         let lastKata = response.data.data[0].id;
-        Kata.findOne({ id: lastKata }).then((kata) => {
-          console.log(kata, "<<<<<<<<<<<<<<<<<Kata");
-          Challenge.create({ name: req.params.name, kataId: kata._id }).then(
-            (challenge) => {
-              console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
-            }
-          );
-        });
+        console.log(lastKata, "<<<<<<<<<<<<<<<<<<<<<<<<lastkata");
+        Kata.findOne({ id: lastKata })
+          .then((kata) => {
+            console.log(kata, "<<<<<<<<<<<<<<<<<Kata");
+            Challenge.create({ name: req.params.name, kataId: kata._id }).then(
+              (challenge) => {
+                console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
+              }
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => console.error(err));
   }
