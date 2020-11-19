@@ -48,6 +48,14 @@ const actions = {
   newKata: async (kata) => {
     return await API.post("/newKata", kata, resetHead());
   },
+
+  fromCodeWars: async (code) => {
+    return await API.post("/kata/rabiul", code, resetHead());
+  },
+
+  getKatas: async () => {
+    return await API.get("/getkata", resetHead());
+  },
 };
 
 API.interceptors.response.use(

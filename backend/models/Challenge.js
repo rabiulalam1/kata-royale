@@ -3,8 +3,8 @@ const { Schema, model } = require("mongoose");
 const challengeSchema = new Schema(
   {
     name: String,
-    userId: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    kataId: [{ type: Schema.Types.ObjectId, ref: "Kata" }],
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    kataId: { type: Schema.Types.ObjectId, ref: "Kata" },
   },
   {
     timestamps: true,

@@ -2,20 +2,38 @@ import React, { Component, useState, useEffect } from "react";
 import actions from "../../api/index";
 
 const Home = (props) => {
-  let [fruit, setFruit] = useState("kiwi");
+  let [kata, setKata] = useState([]);
 
   useEffect(() => {
-    setFruit("passion fruit");
+    async function getAllKatas() {
+      let res = await actions.getKatas();
+      setKata(res.data);
+    }
+    getAllKatas();
   }, []);
 
-  const changeFruit = () => {
-    setFruit("pineapple");
+  const changeFruit = async () => {
+    let res = await actions.fromCodeWars({
+      action: "honor_changed",
+      user: { id: "5d8974a1abb00c002a057f22", honor: 198, honor_delta: 2 },
+    });
+    console.log(res.data);
   };
 
   return (
     <div>
-      Home {fruit}
-      <button onClick={changeFruit}>Change Fruit</button>
+      <button onClick={changeFruit}>Submit Kata</button>
+      <h1>Today's Kata Challenge</h1>
+      <div>
+        <h3>Kata Name: {kata.kata?.[0].name}</h3>
+        <h5>Level: {kata.kata?.[0].rank.name}</h5>
+        <h5>
+          Url:{" "}
+          <a href={kata?.kata?.[0].url} target="_blank">
+            Go to the Kata
+          </a>
+        </h5>
+      </div>
     </div>
   );
 };

@@ -37,7 +37,7 @@ const App = () => {
     <TheContext.Provider value={{ history, user, setUser }}>
       {user?.email}
       <nav>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/home">Home</NavLink>
 
         {user ? (
           <Fragment>
@@ -50,11 +50,13 @@ const App = () => {
           <Fragment>
             <NavLink to="/sign-up">Sign Up</NavLink>
             <NavLink to="/log-in">Log In</NavLink>
+            {!user && <GoogleAuth setUser={setUser} />}
+            {!user && <GoogleAuthLogin setUser={setUser} />}
           </Fragment>
         )}
       </nav>
       <Switch>
-        <Route exact path="/" render={(props) => <Home {...props} />} />
+        <Route exact path="/home" render={(props) => <Home {...props} />} />
 
         <Route exact path="/admin" render={(props) => <Admin {...props} />} />
 
@@ -76,8 +78,6 @@ const App = () => {
 
         <Route component={NotFound} />
       </Switch>
-      {!user && <GoogleAuth setUser={setUser} />}
-      {!user && <GoogleAuthLogin setUser={setUser} />}
 
       <NotificationContainer />
     </TheContext.Provider>

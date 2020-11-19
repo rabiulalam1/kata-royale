@@ -52,7 +52,7 @@ router.get("/logout", (req, res, next) => {
 router.post("/newKata", verifyToken, (req, res, next) => {
   jwt.verify(req.token, "secretkey", (err, authData) => {
     if (err) {
-      console.log(err, "<<<<<<<<<<<<<<<<<<<<<<<<<<Error");
+      console.log(err);
       res.status(403).json(err);
     } else {
       // console.log(req.body);
@@ -75,6 +75,18 @@ router.post("/newKata", verifyToken, (req, res, next) => {
       });
     }
   });
+});
+
+router.get("/getkata", (req, res) => {
+  Kata.find()
+    .sort({ _id: -1 })
+    .limit(1)
+    .then((kata) => {
+      res.json({ kata });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 function isAuth(req, res, next) {
