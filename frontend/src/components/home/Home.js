@@ -4,24 +4,24 @@ import actions from "../../api/index";
 const Home = (props) => {
   let [kata, setKata] = useState([]);
   useEffect(() => {
-    async function getAllKatas() {
-      let res = await actions.getKatas();
+    async function getKata() {
+      let res = await actions.getDailyKata();
       setKata(res.data);
     }
-    getAllKatas();
+    getKata();
   }, []);
 
-  const changeFruit = async () => {
-    let res = await actions.fromCodeWars({
-      action: "honor_changed",
-      user: { id: "5d8974a1abb00c002a057f22", honor: 198, honor_delta: 2 },
-    });
-    console.log(res.data);
-  };
+  // const changeFruit = async () => {
+  //   let res = await actions.fromCodeWars({
+  //     action: "honor_changed",
+  //     user: { id: "5d8974a1abb00c002a057f22", honor: 198, honor_delta: 2 },
+  //   });
+  //   console.log(res.data);
+  // };
 
   return (
     <div>
-      <button onClick={changeFruit}>Submit Kata</button>
+      {/* <button onClick={changeFruit}>Submit Kata</button> */}
       <h1>Today's Kata Challenge</h1>
       <div>
         <h3>Kata Name: {kata.kata?.[0].name}</h3>

@@ -9,6 +9,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/kata/:email", (req, res, next) => {
+  console.log(req.params.email);
   if (req.body.action === "honor_changed") {
     axios
       .get(

@@ -50,11 +50,11 @@ const actions = {
   },
 
   fromCodeWars: async (code) => {
-    return await API.post("/kata/rabiul", code, resetHead());
+    return await API.post("/kata/", code, resetHead());
   },
 
-  getKatas: async () => {
-    return await API.get("/getkata", resetHead());
+  getDailyKata: async () => {
+    return await API.get("/getdailykata", resetHead());
   },
 };
 

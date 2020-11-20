@@ -77,7 +77,7 @@ router.post("/newKata", verifyToken, (req, res, next) => {
   });
 });
 
-router.get("/getkata", (req, res) => {
+router.get("/getdailykata", (req, res) => {
   Kata.find()
     .sort({ _id: -1 })
     .limit(1)
