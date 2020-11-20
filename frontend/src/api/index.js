@@ -58,7 +58,7 @@ const actions = {
   },
 
   fromCodeWars: async (code) => {
-    return await API.post("/kata/", code, resetHead());
+    return await API.post("/kata/srprsworld@gmail.com", code, resetHead());
   },
 
   getDailyKata: async () => {
