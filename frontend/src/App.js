@@ -14,6 +14,9 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://127.0.0.1:5000";
+
 const App = () => {
   let [user, setUser] = useState(null);
 
@@ -23,6 +26,10 @@ const App = () => {
       console.log("user is", user);
       setUser(user?.data);
     }
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("FromAPI", (data) => {
+      console.log(data);
+    });
     getUser();
   }, []);
 
