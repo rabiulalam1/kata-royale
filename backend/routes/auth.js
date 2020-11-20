@@ -23,11 +23,6 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.get("/user", verifyToken, (req, res, next) => {
-
-
-
-
-
   jwt.verify(req.token, "secretkey", (err, authData) => {
     if (err) {
       res.status(403).json(err);
