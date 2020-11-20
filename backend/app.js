@@ -9,6 +9,18 @@ const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("./config/passport");
+const http = require('http');
+
+// var socket = require('socket.io-client')('http://localhost:3000');
+// console.log(socket.on)
+// socket.on('connect', function () {
+
+//   console.log('connected  ')
+
+// });
+
+
+
 
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/deploymentExample";
@@ -74,4 +86,42 @@ app.get("*", (req, res, next) => {
   }
 });
 
-module.exports = app;
+
+
+
+
+
+app.use((req, res, next) => {
+  res.status(404).json({ msg: 'Not Found' });
+});
+
+app.use((err, req, res, next) => {
+  console.error('ERROR', req.method, req.path, err);
+  if (!res.headersSent) {
+    res.status(500).send({ msg: 'Check the error on console' });
+  }
+});
+
+const server = http.createServer(app);
+
+
+//const io = require('socket.io')(server);
+// io.set('origins', 'http://localhost:3000');
+
+// const io = require('socket.io')(server, {
+//   origins: '*:*'
+// });
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('connected!')
+  io.sockets.emit('hi', { data: 'cool' })
+
+});
+
+module.exports = server;
