@@ -3,7 +3,6 @@ import actions from "../../api/index";
 
 const Home = (props) => {
   let [kata, setKata] = useState([]);
-
   useEffect(() => {
     async function getAllKatas() {
       let res = await actions.getKatas();
@@ -29,10 +28,20 @@ const Home = (props) => {
         <h5>Level: {kata.kata?.[0].rank.name}</h5>
         <h5>
           Url:{" "}
-          <a href={kata?.kata?.[0].url} target="_blank">
+          <a href={kata.kata?.[0].url} target="_blank">
             Go to the Kata
           </a>
         </h5>
+      </div>
+      <div>
+        <h5>*Codewars Setting Instruction:</h5>
+        <p>codewars.com &#8594; Account Settings &#8594; Webhooks &#8601;</p>
+        <p>Paste this URL into Payload url field &#8595;</p>
+        <p>
+          <em>
+            https://kata-royale.herokuapp.com/api/kata/{props.user?.email}
+          </em>
+        </p>
       </div>
     </div>
   );

@@ -56,7 +56,11 @@ const App = () => {
         )}
       </nav>
       <Switch>
-        <Route exact path="/home" render={(props) => <Home {...props} />} />
+        <Route
+          exact
+          path="/home"
+          render={(props) => <Home {...props} user={user} />}
+        />
 
         <Route exact path="/admin" render={(props) => <Admin {...props} />} />
 
