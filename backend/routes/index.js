@@ -29,14 +29,14 @@ router.post("/kata/:email", (req, res, next) => {
               email: req.params.email,
               kataId: kata._id,
             }).then((challenge) => {
-              console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
+              console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge1");
               io.emit("kata-completed", {
                 kata,
                 challenge,
                 response,
                 blah: true,
               });
-              io.sockets.emit("kata-completed", { kata, challenge, response });
+              // io.sockets.emit("kata-completed", { kata, challenge, response });
             });
           })
           .catch((err) => {
