@@ -14,6 +14,17 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+
+
+import io from 'socket.io-client';
+
+const socket = io("http://localhost:5000");
+
+socket.on("hi", data => console.log(data))
+
+
+
+
 const App = () => {
   let [user, setUser] = useState(null);
 
@@ -47,13 +58,13 @@ const App = () => {
             <NavLink to="/profile">Profile</NavLink>
           </Fragment>
         ) : (
-          <Fragment>
-            <NavLink to="/sign-up">Sign Up</NavLink>
-            <NavLink to="/log-in">Log In</NavLink>
-            {!user && <GoogleAuth setUser={setUser} />}
-            {!user && <GoogleAuthLogin setUser={setUser} />}
-          </Fragment>
-        )}
+            <Fragment>
+              <NavLink to="/sign-up">Sign Up</NavLink>
+              <NavLink to="/log-in">Log In</NavLink>
+              {!user && <GoogleAuth setUser={setUser} />}
+              {!user && <GoogleAuthLogin setUser={setUser} />}
+            </Fragment>
+          )}
       </nav>
       <Switch>
         <Route
