@@ -56,6 +56,10 @@ const actions = {
   getDailyKata: async () => {
     return await API.get("/getdailykata", resetHead());
   },
+
+  getUserKata: async () => {
+    return await API.get("/getuserkata", resetHead());
+  },
 };
 
 API.interceptors.response.use(

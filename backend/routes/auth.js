@@ -4,6 +4,7 @@ const User = require("../models/User");
 const passport = require("../config/passport");
 const jwt = require("jsonwebtoken");
 const Kata = require("../models/Kata");
+const Challenge = require("../models/Challenge");
 const axios = require("axios");
 
 router.post("/signup", (req, res, next) => {
@@ -87,6 +88,18 @@ router.get("/getdailykata", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+router.get("/getuserkata", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(403).json(err);
+    } else {
+      Challenge.find({ email: authData.user.email }).then((allKatas) => {
+        res.json({ allKatas });
+      });
+    }
+  });
 });
 
 function isAuth(req, res, next) {

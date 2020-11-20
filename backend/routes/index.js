@@ -9,7 +9,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/kata/:email", (req, res, next) => {
-  console.log(req.params.email);
+  console.log(req.params, req.body, "<<<<<<<<<Helllo");
   if (req.body.action === "honor_changed") {
     axios
       .get(
@@ -17,13 +17,16 @@ router.post("/kata/:email", (req, res, next) => {
       )
       .then((response) => {
         let lastKata = response.data.data[0].id;
+        console.log(lastKata, "<<<<<<<<<<<<<<<<<<<<<<<<lastkata");
         Kata.findOne({ id: lastKata })
           .then((kata) => {
             Challenge.create({
               rank: kata.rank.id * -1,
               email: req.params.email,
               kataId: kata._id,
-            }).then((challenge) => {});
+            }).then((challenge) => {
+              console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
+            });
           })
           .catch((err) => {
             console.log(err);
