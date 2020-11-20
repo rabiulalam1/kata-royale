@@ -5,10 +5,21 @@ const Challenge = require("../models/Challenge");
 const User = require("../models/User");
 
 router.get("/", (req, res, next) => {
+
+
   res.status(200).json({ msg: "Working" });
 });
 
 router.post("/kata/:email", (req, res, next) => {
+
+
+
+  var io = req.app.get('socketio');
+
+  console.log(io, ' supmo')
+
+
+
   console.log(req.params, req.body, "<<<<<<<<<Helllo");
   if (req.body.action === "honor_changed") {
     axios
@@ -26,6 +37,7 @@ router.post("/kata/:email", (req, res, next) => {
               kataId: kata._id,
             }).then((challenge) => {
               console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
+              io.emit('kata-completed', { kata, challenge, response })
             });
           })
           .catch((err) => {

@@ -86,10 +86,6 @@ app.get("*", (req, res, next) => {
 });
 
 
-
-
-
-
 app.use((req, res, next) => {
   res.status(404).json({ msg: 'Not Found' });
 });
@@ -104,18 +100,14 @@ app.use((err, req, res, next) => {
 const server = http.createServer(app);
 
 
-//const io = require('socket.io')(server);
-// io.set('origins', 'http://localhost:3000');
-
-// const io = require('socket.io')(server, {
-//   origins: '*:*'
-// });
-
 const io = require('socket.io')(server, {
   cors: {
     origin: '*',
   }
 });
+
+
+app.set('socketio', io);
 
 io.on('connection', (socket) => {
   console.log('connected!')
