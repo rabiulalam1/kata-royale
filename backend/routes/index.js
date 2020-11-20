@@ -36,7 +36,11 @@ router.post("/kata/:email", (req, res, next) => {
               //   response,
               //   blah: true,
               // });
-              io.sockets.emit("kata-completed", { test: true });
+              io.sockets.emit("kata-completed", {
+                kata: kata,
+                challenge: challenge,
+                email: req.params.email,
+              });
             });
           })
           .catch((err) => {
