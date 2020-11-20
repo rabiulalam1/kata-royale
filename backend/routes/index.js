@@ -30,6 +30,12 @@ router.post("/kata/:email", (req, res, next) => {
               kataId: kata._id,
             }).then((challenge) => {
               console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge");
+              io.emit("kata-completed", {
+                kata,
+                challenge,
+                response,
+                blah: true,
+              });
               io.sockets.emit("kata-completed", { kata, challenge, response });
             });
           })
