@@ -24,10 +24,6 @@ const App = () => {
       console.log("user is", user);
       setUser(user?.data);
     }
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", (data) => {
-      console.log(data);
-    });
     getUser();
   }, []);
 

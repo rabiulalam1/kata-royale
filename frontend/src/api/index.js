@@ -5,6 +5,14 @@ import {
   NotificationManager,
 } from "react-notifications";
 
+import io from "socket.io-client";
+
+const socket = io(baseURL.replace("/api", ""));
+
+socket.on("hi", (data) => console.log(data));
+
+socket.on("kata-completed", (data) => console.log(data));
+
 console.log(baseURL);
 
 const token = window.localStorage.getItem("token");
