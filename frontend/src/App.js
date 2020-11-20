@@ -22,7 +22,7 @@ const socket = io("http://localhost:5000");
 
 socket.on("hi", data => console.log(data))
 
-
+socket.on('kata-completed', data => console.log(data))
 
 
 const App = () => {
