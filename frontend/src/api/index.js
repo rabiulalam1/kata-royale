@@ -37,6 +37,7 @@ const API = axios.create({
 });
 
 const actions = {
+  socket,
   getUser: async () => {
     return await API.get(`/user`, resetHead());
   },

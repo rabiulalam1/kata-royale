@@ -1,5 +1,6 @@
 import React, { Component, Fragment, useState, useEffect } from "react";
 import { Switch, Route, NavLink, useHistory } from "react-router-dom";
+import baseURL from "./api/config.js";
 import TheContext from "./TheContext";
 import Home from "./components/home/Home";
 import NotFound from "./components/404/NotFound.js";
@@ -15,6 +16,9 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+// import io from "socket.io-client";
+
+// const socket = io(baseURL.replace("/api", ""));
 
 const App = () => {
   let [user, setUser] = useState(null);

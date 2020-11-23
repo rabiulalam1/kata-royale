@@ -4,6 +4,7 @@ import actions from "../api/index";
 
 const Game = (props) => {
   const [gameDetail, setGameDetail] = useState({});
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     async function getGameDetail() {
@@ -12,8 +13,10 @@ const Game = (props) => {
       setGameDetail(res?.data.game);
     }
     getGameDetail();
-  }, []);
 
+    actions.socket.on("Join", (data) => setUsers([...users, data.user.name]));
+  }, []);
+  console.log(users);
   return (
     <div>
       <h1>Game Page</h1>
