@@ -1,13 +1,21 @@
 import React, { Component, useState, useEffect } from "react";
 import actions from "../../api/index";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
   let [kata, setKata] = useState([]);
+  let [allGames, setAllGames] = useState([]);
   useEffect(() => {
     async function getKata() {
       let res = await actions.getDailyKata();
       setKata(res.data);
     }
+    async function getAllGames() {
+      let res2 = await actions.getAllGames();
+      console.log(res2?.data);
+      setAllGames(res2?.data.allGames);
+    }
+    getAllGames();
     getKata();
   }, []);
 
@@ -17,6 +25,19 @@ const Home = (props) => {
       user: { id: "5d8974a1abb00c002a057f22", honor: 198, honor_delta: 2 },
     });
     console.log(res.data);
+  };
+
+  const ShowGameLinks = () => {
+    return allGames.map((eachGame) => {
+      return (
+        <li>
+          <Link to={`game/${eachGame._id}`}>
+            {eachGame._id}
+            {eachGame.name}
+          </Link>
+        </li>
+      );
+    });
   };
 
   return (
@@ -43,6 +64,8 @@ const Home = (props) => {
           </em>
         </p>
       </div>
+
+      <ul>{<ShowGameLinks />}</ul>
     </div>
   );
 };

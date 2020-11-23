@@ -13,6 +13,8 @@ socket.on("hi", (data) => console.log(data));
 
 socket.on("kata-completed", (data) => console.log(data));
 
+socket.on("Join", (data) => console.log(data));
+
 console.log(baseURL);
 
 const token = window.localStorage.getItem("token");
@@ -74,7 +76,12 @@ const actions = {
   },
 
   getGameDetail: async (id) => {
+    socket.emit("Join Game", { id });
     return await API.get(`/gameDetail?id=${id}`, resetHead());
+  },
+
+  getAllGames: async () => {
+    return await API.get("/getAllGames", resetHead());
   },
 };
 

@@ -97,8 +97,26 @@ const io = require("socket.io")(server, {
 app.set("socketio", io);
 
 io.on("connection", (socket) => {
-  console.log("connected!");
+  console.log("connected!", socket.id, "socketIDDDD");
   io.sockets.emit("hi", { data: "New User Connected" });
+  socket.on("Join Game", (game) => {
+    console.log(game, socket.id, "socket.io");
+
+    socket.join(game.id);
+
+    io.to(game.id).emit("Join", { message: `${socket.id} Joined the room` });
+
+    jwt.verify(req.token, "secretkey", (err, authData) => {
+      if (err) {
+        res.status(403).json(err);
+      } else {
+        console.log(authData, "Weired Animal");
+        // Challenge.find({ email: authData.user.email }).then((allKatas) => {
+        //   res.json({ allKatas });
+        // });
+      }
+    });
+  });
 });
 
 module.exports = server;

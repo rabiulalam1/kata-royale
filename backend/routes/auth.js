@@ -108,6 +108,8 @@ router.get("/getdailykata", (req, res) => {
 
 router.get("/gameDetail", (req, res) => {
   console.log(req.query, "<<<<<<<<<<<<<<<<<<<<<ID");
+  // const io = req.app.get("socketio");
+  // io.on("Join Game", (socket) => console.log(socket, socket.id, "socket.io"));
   Game.findById(req.query.id)
 
     .then((game) => {
@@ -116,6 +118,20 @@ router.get("/gameDetail", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+router.get("/getAllGames", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(403).json(err);
+    } else {
+      Game.find()
+        .then((allGames) => {
+          res.json({ allGames });
+        })
+        .catch((err) => console.log(err));
+    }
+  });
 });
 
 router.get("/getuserkata", verifyToken, (req, res) => {

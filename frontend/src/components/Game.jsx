@@ -6,9 +6,7 @@ const Game = (props) => {
   const [gameDetail, setGameDetail] = useState({});
 
   useEffect(() => {
-    console.log("Hello World");
     async function getGameDetail() {
-      console.log("Gameeeeeeeeee");
       let res = await actions.getGameDetail(props.match.params.id);
       console.log(res?.data);
       setGameDetail(res?.data.game);

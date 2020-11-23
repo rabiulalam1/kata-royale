@@ -15,7 +15,7 @@ const CreateGame = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input
+        {/* <input
           type="text"
           placeholder="Game Name"
           onChange={(e) => setName(e.target.value)}
@@ -29,8 +29,8 @@ const CreateGame = (props) => {
           type="text"
           placeholder="Enter End Date"
           onChange={(e) => setEndDate(e.target.value)}
-        ></input>
-        <button>Submit</button>
+        ></input> */}
+        <button>Start Game</button>
       </form>
     </div>
   );
