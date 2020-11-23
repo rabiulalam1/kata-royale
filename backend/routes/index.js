@@ -9,11 +9,8 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/kata/:email", (req, res, next) => {
-  var io = req.app.get("socketio");
+  const io = req.app.get("socketio");
 
-  console.log(io, " supmo");
-
-  console.log(req.params, req.body, "<<<<<<<<<Helllo");
   if (req.body.action === "honor_changed") {
     axios
       .get(
@@ -21,7 +18,6 @@ router.post("/kata/:email", (req, res, next) => {
       )
       .then((response) => {
         let lastKata = response.data.data[0].id;
-        console.log(lastKata, "<<<<<<<<<<<<<<<<<<<<<<<<lastkata");
         Kata.findOne({ id: lastKata })
           .then((kata) => {
             Challenge.create({
@@ -29,13 +25,6 @@ router.post("/kata/:email", (req, res, next) => {
               email: req.params.email,
               kataId: kata._id,
             }).then((challenge) => {
-              console.log(challenge, "<<<<<<<<<<<<<<<<<Challenge1");
-              // io.emit("kata-completed", {
-              //   kata,
-              //   challenge,
-              //   response,
-              //   blah: true,
-              // });
               io.sockets.emit("kata-completed", {
                 kata: kata,
                 challenge: challenge,

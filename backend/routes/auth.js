@@ -5,6 +5,7 @@ const passport = require("../config/passport");
 const jwt = require("jsonwebtoken");
 const Kata = require("../models/Kata");
 const Challenge = require("../models/Challenge");
+const Game = require("../models/Game");
 const axios = require("axios");
 
 router.post("/signup", (req, res, next) => {
@@ -28,7 +29,6 @@ router.get("/user", verifyToken, (req, res, next) => {
       res.status(403).json(err);
     } else {
       // res.status(200).json(authData.user)
-      console.log(authData.user, "yolo");
       User.findById(authData.user._id)
         .then((user) => {
           res.status(200).json(user);
@@ -78,12 +78,40 @@ router.post("/newKata", verifyToken, (req, res, next) => {
   });
 });
 
+router.post("/newGame", verifyToken, (req, res, next) => {
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      console.log(err);
+      res.status(403).json(err);
+    } else {
+      // console.log(req.body);
+      Game.create(req.body)
+        .then((game) => {
+          res.status(200).json({ game });
+        })
+        .catch((err) => res.status(500).json(err));
+    }
+  });
+});
+
 router.get("/getdailykata", (req, res) => {
   Kata.find()
     .sort({ _id: -1 })
     .limit(1)
     .then((kata) => {
       res.json({ kata });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/gameDetail", (req, res) => {
+  console.log(req.query, "<<<<<<<<<<<<<<<<<<<<<ID");
+  Game.findById(req.query.id)
+
+    .then((game) => {
+      res.json({ game });
     })
     .catch((err) => {
       console.log(err);

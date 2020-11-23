@@ -68,6 +68,14 @@ const actions = {
   getUserKata: async () => {
     return await API.get("/getuserkata", resetHead());
   },
+
+  newGame: async (data) => {
+    return await API.post("/newgame", data, resetHead());
+  },
+
+  getGameDetail: async (id) => {
+    return await API.get(`/gameDetail?id=${id}`, resetHead());
+  },
 };
 
 API.interceptors.response.use(

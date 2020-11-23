@@ -10,6 +10,7 @@ import actions from "./api/index";
 import GoogleAuth from "./components/auth/GoogleAuth";
 import GoogleAuthLogin from "./components/auth/GoogleAuthLogin";
 import Admin from "./components/Admin";
+import Game from "./components/Game";
 import {
   NotificationContainer,
   NotificationManager,
@@ -80,6 +81,7 @@ const App = () => {
           path="/profile"
           render={(props) => <Profile {...props} />}
         />
+        <Route exact path="/game/:id" render={(props) => <Game {...props} />} />
 
         <Route component={NotFound} />
       </Switch>

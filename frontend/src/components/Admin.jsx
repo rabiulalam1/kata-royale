@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import actions from "../api/index";
+import CreateGame from "./CreateGame";
 
 function Admin(props) {
   let [url, setUrl] = useState();
@@ -12,14 +13,19 @@ function Admin(props) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter Url"
-          onChange={(e) => setUrl(e.target.value)}
-        ></input>
-        <button>Submit</button>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter Url"
+            onChange={(e) => setUrl(e.target.value)}
+          ></input>
+          <button>Submit</button>
+        </form>
+      </div>
+      <div className="game">
+        <CreateGame {...props} />
+      </div>
     </div>
   );
 }
