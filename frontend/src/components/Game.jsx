@@ -14,7 +14,11 @@ const Game = (props) => {
     }
     getGameDetail();
 
-    actions.socket.on("Join", (data) => setUsers([...users, data.user.name]));
+    actions.socket.on("Join", (data) => {
+      let newUser = [...users];
+      newUser.push(data.user.name);
+      setUsers(newUser);
+    });
   }, []);
   console.log(users);
   return (
