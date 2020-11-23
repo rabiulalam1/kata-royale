@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -104,19 +105,46 @@ io.on("connection", (socket) => {
 
     socket.join(game.id);
 
-    io.to(game.id).emit("Join", { message: `${socket.id} Joined the room` });
-
-    jwt.verify(req.token, "secretkey", (err, authData) => {
-      if (err) {
-        res.status(403).json(err);
-      } else {
-        console.log(authData, "Weired Animal");
-        // Challenge.find({ email: authData.user.email }).then((allKatas) => {
-        //   res.json({ allKatas });
-        // });
+    jwt.verify(
+      game.headers.Authorization.split(" ")[1],
+      "secretkey",
+      (err, authData) => {
+        if (err) {
+          // res.status(403).json(err);
+          console.log(err, "<<<<<<<<<<<<<<<<<<<<Error");
+        } else {
+          console.log(authData, "Weired Animal");
+          // Challenge.find({ email: authData.user.email }).then((allKatas) => {
+          //   res.json({ allKatas });
+          // });
+          io.to(game.id).emit("Join", {
+            message: `${socket.id} Joined the room`,
+            user: authData.user,
+          });
+        }
       }
-    });
+    );
   });
 });
+
+function verifyToken(req, res, next) {
+  console.log("verify");
+  // Get auth header value
+  const bearerHeader = req.headers["authorization"];
+  // Check if bearer is undefined
+  if (typeof bearerHeader !== "undefined") {
+    // Split at the space
+    const bearer = bearerHeader.split(" ");
+    // Get token from array
+    const bearerToken = bearer[1];
+    // Set the token
+    req.token = bearerToken;
+    // Next middleware
+    next();
+  } else {
+    // Forbidden
+    res.status(403); //.json({err:'not logged in'});
+  }
+}
 
 module.exports = server;

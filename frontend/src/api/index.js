@@ -76,7 +76,7 @@ const actions = {
   },
 
   getGameDetail: async (id) => {
-    socket.emit("Join Game", { id });
+    socket.emit("Join Game", { id, ...resetHead() });
     return await API.get(`/gameDetail?id=${id}`, resetHead());
   },
 
