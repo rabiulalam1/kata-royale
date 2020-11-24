@@ -7,7 +7,7 @@ const Game = (props) => {
   const [gameDetail, setGameDetail] = useState({});
   const [users, setUsers] = useState([]);
   const { user, setUser, history } = React.useContext(TheContext);
-  const [gameState, setGameState] = useState({});
+  const [gameState, setGameState] = useState({ players: [] });
 
   useEffect(() => {
     async function getGameDetail() {
@@ -20,6 +20,9 @@ const Game = (props) => {
       setGameState(data);
       console.log(data.players);
     });
+    window.onbeforeunload = () => {
+      actions.socket.emit("leave", { user, gameId: props.match.params.id });
+    };
     return () => {
       actions.socket.emit("leave", { user, gameId: props.match.params.id });
     };
@@ -27,7 +30,7 @@ const Game = (props) => {
   console.log(gameState);
 
   const DisplayUser = () => {
-    return gameState?.players?.map((eachPlayer) => {
+    return gameState.players.map((eachPlayer) => {
       return <li>{eachPlayer.name}</li>;
     });
   };
@@ -38,7 +41,9 @@ const Game = (props) => {
       <p>Start Date:{moment(gameDetail.startDate).fromNow()} </p>
       <p>End Date:{moment(gameDetail.endDate).fromNow()} </p>
       <p>
-        <ul>{/* <DisplayUser /> */}</ul>
+        <ul>
+          <DisplayUser />
+        </ul>
       </p>
     </div>
   );
