@@ -20,9 +20,9 @@ const Game = (props) => {
       setGameState(data);
       console.log(data.players);
     });
-    window.onbeforeunload = () => {
-      actions.socket.emit("leave", { user, gameId: props.match.params.id });
-    };
+    // window.onbeforeunload = () => {
+    //   actions.socket.emit("leave", { user, gameId: props.match.params.id });
+    // };
     return () => {
       actions.socket.emit("leave", { user, gameId: props.match.params.id });
     };

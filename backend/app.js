@@ -107,6 +107,7 @@ io.on("connection", (socket) => {
   gameState.connections.push(socket.id);
   io.sockets.emit("hi", { data: "New User Connected" });
   socket.on("leave", (game) => {
+    console.log("leavinggggggggggg");
     gameState.players.map((eachPlayer, index) => {
       if (eachPlayer._id === game.user._id) {
         gameState.players.splice(index, 1);
@@ -114,6 +115,18 @@ io.on("connection", (socket) => {
     });
     socket.leave(game.gameId);
     io.to(game.gameId).emit("Join", gameState);
+  });
+  socket.on("disconnect", () => {
+    console.log(socket.id, "blahblahhhhhhhhhhh");
+    let gameId = null;
+    gameState.players.map((eachPlayer, index) => {
+      if (eachPlayer.socketId === socket.id) {
+        gameId = eachPlayer.gameId;
+        gameState.players.splice(index, 1);
+      }
+    });
+    socket.leave(gameId);
+    io.to(gameId).emit("Join", gameState);
   });
   socket.on("Join Game", (game) => {
     socket.join(game.id);
@@ -124,7 +137,10 @@ io.on("connection", (socket) => {
       (err, authData) => {
         if (err) {
         } else {
-          gameState["players"].push(authData.user);
+          let user = authData.user;
+          user.socketId = socket.id;
+          user.gameId = game.id;
+          gameState["players"].push(user);
           io.to(game.id).emit("Join", gameState);
         }
       }
