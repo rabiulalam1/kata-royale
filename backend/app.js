@@ -109,7 +109,7 @@ io.on("connection", (socket) => {
   socket.on("leave", (game) => {
     console.log("leavinggggggggggg");
     gameState.players.map((eachPlayer, index) => {
-      if (eachPlayer._id === game.user._id) {
+      if (game.user && eachPlayer._id === game.user._id) {
         gameState.players.splice(index, 1);
       }
     });
