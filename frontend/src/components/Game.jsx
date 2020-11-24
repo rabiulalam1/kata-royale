@@ -16,7 +16,7 @@ const Game = (props) => {
       setGameDetail(res.data.game);
     }
     getGameDetail();
-    actions.socket.on("Join", (data) => {
+    actions.socket.on("Update", (data) => {
       setGameState(data);
       console.log(data.players);
     });
