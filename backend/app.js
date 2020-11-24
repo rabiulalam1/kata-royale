@@ -97,12 +97,25 @@ const io = require("socket.io")(server, {
 
 app.set("socketio", io);
 
+const gameState = {
+  connections: [],
+  players: [],
+};
+
 io.on("connection", (socket) => {
   console.log("connected!", socket.id, "socketIDDDD");
+  gameState.connections.push(socket.id);
   io.sockets.emit("hi", { data: "New User Connected" });
+  socket.on("leave", (game) => {
+    gameState.players.map((eachPlayer, index) => {
+      if (eachPlayer._id === game.user._id) {
+        gameState.players.splice(index, 1);
+      }
+    });
+    socket.leave(game.gameId);
+    io.to(game.gameId).emit("Join", gameState);
+  });
   socket.on("Join Game", (game) => {
-    console.log(game, socket.id, "socket.io");
-
     socket.join(game.id);
 
     jwt.verify(
@@ -110,17 +123,9 @@ io.on("connection", (socket) => {
       "secretkey",
       (err, authData) => {
         if (err) {
-          // res.status(403).json(err);
-          console.log(err, "<<<<<<<<<<<<<<<<<<<<Error");
         } else {
-          console.log(authData, "Weired Animal");
-          // Challenge.find({ email: authData.user.email }).then((allKatas) => {
-          //   res.json({ allKatas });
-          // });
-          io.to(game.id).emit("Join", {
-            message: `${socket.id} Joined the room`,
-            user: authData.user,
-          });
+          gameState["players"].push(authData.user);
+          io.to(game.id).emit("Join", gameState);
         }
       }
     );
