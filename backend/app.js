@@ -114,7 +114,7 @@ io.on("connection", (socket) => {
       }
     });
     socket.leave(game.gameId);
-    socket.to(game.gameId).emit("Update", gameState);
+    io.in(game.gameId).emit("Update", gameState);
   });
   socket.on("disconnect", () => {
     console.log(socket.id, "blahblahhhhhhhhhhh");
@@ -126,7 +126,7 @@ io.on("connection", (socket) => {
       }
     });
     socket.leave(gameId);
-    socket.to(gameId).emit("Update", gameState);
+    io.in(gameId).emit("Update", gameState);
   });
   socket.on("Join Game", (game) => {
     socket.join(game.id);
@@ -141,7 +141,7 @@ io.on("connection", (socket) => {
           user.socketId = socket.id;
           user.gameId = game.id;
           gameState["players"].push(user);
-          socket.to(game.id).emit("Update", gameState);
+          io.in(game.id).emit("Update", gameState);
         }
       }
     );
