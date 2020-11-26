@@ -26,6 +26,9 @@ function Admin(props) {
       <div className="game">
         <CreateGame {...props} />
       </div>
+      <div>
+        Test
+      </div>
     </div>
   );
 }

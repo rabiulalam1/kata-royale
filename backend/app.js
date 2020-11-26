@@ -107,7 +107,6 @@ io.on("connection", (socket) => {
   gameState.connections.push(socket.id);
   io.sockets.emit("hi", { data: "New User Connected" });
   socket.on("leave", (game) => {
-    console.log("leavinggggggggggg");
     gameState.players.map((eachPlayer, index) => {
       if (game.user && eachPlayer._id === game.user._id) {
         gameState.players.splice(index, 1);
